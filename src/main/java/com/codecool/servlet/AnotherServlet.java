@@ -15,7 +15,7 @@ public class AnotherServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 11; i++) {
             buffer.append("<div>");
             buffer.append("<a href=\"/another?link_id=" + i + "\">");
             buffer.append("Hello " + i + ". link:");
