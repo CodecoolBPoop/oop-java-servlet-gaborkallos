@@ -5,11 +5,8 @@ import java.util.List;
 
 public class ItemStore {
 
-    private static List<Item> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
-    public static List<Item> getItems() {
-        return items;
-    }
 
     public void add(Item item) {
         items.add(item);
@@ -23,7 +20,7 @@ public class ItemStore {
         }
     }
 
-    public String init() {
+    public String getAsHTML() {
         StringBuffer result = new StringBuffer();
         for (Item elem : items) {
             result.append("<tr>");
@@ -39,16 +36,24 @@ public class ItemStore {
         return result.toString();
     }
 
-    public void clearItems() {
-        items.clear();
-        Item.staticId = 1;
+    public String getCartItems() {
+        StringBuffer result = new StringBuffer();
+        double sum = 0;
+        for (Item elem : items) {
+            result.append("<tr>");
+            result.append("<td class=\"text-left\">" + elem.getName() + "</td>");
+            result.append("<td class=\"text-right\"> $" + elem.getPrice() + "</td>");
+            result.append("</tr>");
+            sum += elem.getPrice();
+
+        }
+        result.append("<tr><td><h3>Total: </h3></td><td class=\"text-right\"><h3> $" + sum + "</h3></td></tr>");
+        return result.toString();
     }
 
     public Item findItem(int id) {
         for (Item item : items) {
-            System.err.println(item.getId());
             if (item.getId() == id) {
-                System.err.println(item.getName());
                 return item;
             }
         }

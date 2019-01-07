@@ -1,5 +1,7 @@
 package com.codecool.servlet;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,22 +13,20 @@ import java.io.PrintWriter;
 @WebServlet(name = "MyWebShop", urlPatterns = {"/webshop"}, loadOnStartup = 3)
 public class WebShopServlet extends HttpServlet {
 
-    public ItemStore cart = new ItemStore();
-    public ItemStore stock = new ItemStore();
+
+    static ItemStore cart = new ItemStore();
+
+    public ItemStore getCart(){
+        return cart;
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         PrintWriter out = response.getWriter();
         String title = "This is my Webshop";
-
-
-
-        stock.add(new Item("Asus Laptop", 1600));
-        stock.add(new Item("Lenovo Laptop", 1620));
-        stock.add(new Item("Game of Thrones Ebook", 55));
-        stock.add(new Item("Harry Potter Ebook", 50));
-
 
 
         out.println(
@@ -50,32 +50,31 @@ public class WebShopServlet extends HttpServlet {
                         "</tr>\n" +
                         "</thead>\n" +
                         "<tbody>\n" +
-                        stock.init() +
+                        Stock.stock.getAsHTML() +
                         "</tbody>\n" +
                         "</table>\n" +
                         "<input type=\"button\" value=\"Checkout!\" onclick=\"window.location.href='/checkout'\"/ class=\"btn btn-danger\"></input>" +
                         "</div>" +
-                        cart.init() +
                         "</body></html>"
         );
 
         String add = request.getParameter("add");
         String remove = request.getParameter("remove");
 
-        if (add != null){
-            cart.add(stock.findItem(Integer.parseInt(add)));
+        if (add != null) {
+            cart.add(Stock.stock.findItem(Integer.parseInt(add)));
         }
 
-        if(remove != null){
-            Item removable = cart.findItem(Integer.parseInt(remove));
-            cart.remove(removable);
+        if (remove != null) {
+           Item item = cart.findItem(Integer.parseInt(remove));
+           cart.remove(item);
         }
 
         out.flush();
         out.close();
-        stock.clearItems();
-
+       // stock.clearItems();
 
 
     }
+
 }

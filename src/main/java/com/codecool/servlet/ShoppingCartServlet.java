@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+
+import static com.codecool.servlet.WebShopServlet.cart;
 
 @WebServlet(name = "ShoppingCartServlet", urlPatterns = {"/checkout"}, loadOnStartup = 4)
 public class ShoppingCartServlet extends HttpServlet {
@@ -17,10 +18,6 @@ public class ShoppingCartServlet extends HttpServlet {
             throws IOException {
         PrintWriter out = response.getWriter();
         String title = "ShoppingCart";
-
-        List<Item> cart = ItemStore.getItems();
-
-
 
 
         out.println("<html>\n" +
@@ -43,11 +40,12 @@ public class ShoppingCartServlet extends HttpServlet {
                 "</tr>\n" +
                 "</thead>\n" +
                 "<tbody>\n" +
-                cart +
+                cart.getCartItems() +
                 "</tbody>\n" +
                 "</table>\n" +
                 "<input type=\"button\" value=\"Webshop\" onclick=\"window.location.href='/webshop'\"/ class=\"btn btn-primary\"></input>" +
                 "</div>" +
+
                 "</body></html>");
     }
 }
