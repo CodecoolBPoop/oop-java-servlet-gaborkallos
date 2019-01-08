@@ -16,10 +16,6 @@ public class WebShopServlet extends HttpServlet {
 
     static ItemStore cart = new ItemStore();
 
-    public ItemStore getCart(){
-        return cart;
-    }
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

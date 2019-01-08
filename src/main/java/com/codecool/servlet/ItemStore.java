@@ -1,6 +1,7 @@
 package com.codecool.servlet;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ItemStore {
@@ -13,9 +14,11 @@ public class ItemStore {
     }
 
     public void remove(Item item) {
-        for (Item elem : items) {
-            if (elem.equals(item)) {
-                items.remove(elem);
+        for (Iterator<Item> iterator = items.iterator(); iterator.hasNext(); ) {
+            Item cartItem = iterator.next();
+            if (cartItem.getName().equals(item.getName())) {
+                iterator.remove();
+                break;
             }
         }
     }
